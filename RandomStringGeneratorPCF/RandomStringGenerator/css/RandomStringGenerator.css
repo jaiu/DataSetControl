@@ -1,0 +1,62 @@
+.ConsignOIntegrations\.Control\.RandomStringGenerator .mainDiv{
+    width: 100%;
+    float: left;
+}
+
+.ConsignOIntegrations\.Control\.RandomStringGenerator .textAreaDiv{
+    width: 100%;
+    display: block;
+    color: #495057;
+}
+
+.ConsignOIntegrations\.Control\.RandomStringGenerator .btnDiv{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ConsignOIntegrations\.Control\.RandomStringGenerator textarea{
+    display: block;
+    width: inherit;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border: 3px solid #cccccc;
+            padding: 5px;
+            font-family: Tahoma, sans-serif;
+            background-position: bottom right;
+            background-repeat: no-repeat;
+            font-family:"Lucida Console", Courier, monospace;
+            color: #606060 ;
+    
+}
+
+.ConsignOIntegrations\.Control\.RandomStringGenerator button{
+    width: 100%;
+    background-color:rgb(106, 30, 122);
+    border: none;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    width: 25%;
+    font-family: 'SegoeUI', 'Segoe UI';
+}
+
+.ConsignOIntegrations\.Control\.RandomStringGenerator button:hover{
+    background-color: rgb(4, 89, 153);
+}
+
+.ConsignOIntegrations\.Control\.RandomStringGenerator button:disabled{
+    background-color: #A9A9A9;
+    color: white;
+}

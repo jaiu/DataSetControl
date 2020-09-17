@@ -11,6 +11,6 @@ export class Constants {
     //method to get request body
     //HE69-PF84-NE95-EN37
     public static getRequestBody = (address: string, apiKey: string): string => {
-        return `Key=${apiKey}&SearchTerm=${address}&LastId=\"\"&SearchFor=Everything&Country=CAN&LanguagePreference=en&MaxSuggestions=7&MaxResults=7`
+        return `Key=${apiKey}&SearchTerm=${address}&LastId=\"\"&SearchFor=Everything&Country=CA&LanguagePreference=en&MaxSuggestions=20&MaxResults=20`
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="Demos.SysIncremental.PCF" constructor="AddressLookupMaterialUI" version="0.0.54" display-name-key="AddressLookupMaterialUI" description-key="AddressLookupMaterialUI description" control-type="standard">
+  <control namespace="Demos.SysIncremental.PCF" constructor="AddressLookupMaterialUI" version="0.0.64" display-name-key="AddressLookupMaterialUI" description-key="AddressLookupMaterialUI description" control-type="standard">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="AddressInput" display-name-key="AddressInput" description-key="AddressInput" of-type="SingleLine.Text" usage="bound" required="false" />
     <property name="AddressLine1" display-name-key="AddressLine1" description-key="AddressLine1" of-type="SingleLine.Text" usage="bound" required="true" />
@@ -22,7 +22,7 @@
     -->
     <resources>
       <code path="index.ts" order="1" />
-      <css path="css/AddressLookupMaterialUI.css" order="1" />
+      <!--<css path="css/AddressLookupMaterialUI.css" order="1" />-->
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <resx path="strings/AddressLookupMaterialUI.1033.resx" version="1.0.0" />
       -->

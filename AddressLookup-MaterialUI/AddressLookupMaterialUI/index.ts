@@ -1,8 +1,9 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import { IAddressProps, AddressLookup, IAddress } from './AddressLookup/AddressLookup';
+import { AddressLookup } from './AddressLookup/AddressLookup';
 import { Constants } from './Constants/Constants';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { IAddress, IAddressProps } from './Interfaces/Interfaces';
 
 
 export class AddressLookupMaterialUI implements ComponentFramework.StandardControl<IInputs, IOutputs> {

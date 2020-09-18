@@ -1,29 +1,10 @@
 import * as React from 'react';
 import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails } from '@material-ui/lab/AutoComplete';
-import { TextField } from '@material-ui/core';
+import { TextField, Button, Box } from '@material-ui/core';
 import { Constants } from '../Constants/Constants';
+import { IAddressProps, IAddressState, IAddress } from '../Interfaces/Interfaces';
+import { ListOption } from '../ListOption/ListOption';
 
-//address Interface
-export interface IAddress {
-    cursor: Number;
-    Description: string;
-    Highlight: string;
-    Id: string;
-    Next: string;
-    Text: string;
-}
-
-//address props interface
-export interface IAddressProps {
-    CompleteAddress?: IAddress;
-    APIKey: string;
-    handleOnChange: (value:IAddress) => void;
-}
-
-//address State interface
-export interface IAddressState {
-    Addresses: IAddress[];
-}
 
 //initial addresses
 const initialAddresses: IAddress[] = [];
@@ -81,11 +62,13 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
             <div>
                 <Autocomplete
                     options={this.state.Addresses} 
-                    getOptionLabel={(option:IAddress) => (option.Text + Constants.comma_DELIMETER + option.Description)}
+                    renderOption={(option: IAddress) => ( <ListOption Description={option.Description} Id={option.Id} Next={option.Next} Text={option.Text}> </ListOption>)}
+                    getOptionLabel={(option:IAddress) => (option.Text + Constants.comma_DELIMETER + option.Description + Constants.DEFAULT_STRING)}
                     onInputChange={(event: React.ChangeEvent<{}>, newInputValue:string):void => {
                         this.handleChange(event, newInputValue);
                     }}
                     onChange={(e: React.ChangeEvent<{}>, value: any, reason: AutocompleteChangeReason, details: AutocompleteChangeDetails<IAddress>|undefined): void => {
+                        console.log(e.target);
                         (reason === Constants.AUTOCOMPLETE_SELECT_OPTION) ? this.onSelectOptionValueChange(value) : console.log(`reason: ${reason} details: ${details}`);
                     }}
                     renderInput={(params:any) => <TextField  {...params} label={Constants.DEFAULT_HINT} variant="outlined"></TextField>}

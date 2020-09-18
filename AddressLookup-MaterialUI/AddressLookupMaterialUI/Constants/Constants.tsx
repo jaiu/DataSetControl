@@ -7,6 +7,10 @@ export class Constants {
     public static readonly HTTP_METHOD_POST = "POST";
     public static readonly HTTP_HEADER_CONTENT_FORM_URLENCODED = "application/x-www-form-urlencoded";
     public static readonly AUTOCOMPLETE_SELECT_OPTION = "select-option";
+    public static readonly NEXT = {
+        Retrieve: "Retrieve",
+        Find: "Find",
+    }
 
     //method to get request body
     //HE69-PF84-NE95-EN37

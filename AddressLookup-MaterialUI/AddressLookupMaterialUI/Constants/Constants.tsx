@@ -12,9 +12,20 @@ export class Constants {
         Find: "Find",
     }
 
-    //method to get request body
-    //HE69-PF84-NE95-EN37
-    public static getRequestBody = (address: string, apiKey: string): string => {
-        return `Key=${apiKey}&SearchTerm=${address}&LastId=\"\"&SearchFor=Everything&Country=CA&LanguagePreference=en&MaxSuggestions=20&MaxResults=20`
+    /**
+     * Get request body for search call
+     * @param address 
+     * @param apiKey 
+     */
+    public static getRequestBody = (_address: string, _apiKey: string): string => {
+        return `Key=${_apiKey}&SearchTerm=${_address}&LastId=\"\"&SearchFor=Everything&Country=CA&LanguagePreference=en&MaxSuggestions=20&MaxResults=20`
     }
+
+    public static getRequestBodyFind = (_id: string, _apiKey: string): string => {
+        return `Key=${_apiKey}&LastId=${_id}`;
+    }
+
+
+
+
 }

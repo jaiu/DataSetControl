@@ -16,6 +16,7 @@ export interface IAddressProps {
 
 export interface IAddressState {
     Addresses: IAddress[];
+    isLoading: boolean;
 }
 //#endregion
 

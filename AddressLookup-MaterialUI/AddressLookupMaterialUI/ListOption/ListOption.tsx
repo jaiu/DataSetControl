@@ -23,7 +23,7 @@ export const ListOption: FunctionComponent<IListOptionProps> = ({Description, Id
         return(<Box component="div" display="inline">
                     {Text + Constants.comma_DELIMETER + Description + Constants.DEFAULT_STRING}
                     <Box p={2} component="div" display="inline">
-                        <Button size="small" color="secondary" onClick={handleOnChange}>Expand</Button>
+                        <Button id={Constants.NEXT.Find} size="small" color="secondary" onClick={handleOnChange}>{Constants.Expand}</Button>
                     </Box>
                 </Box>);   
     }

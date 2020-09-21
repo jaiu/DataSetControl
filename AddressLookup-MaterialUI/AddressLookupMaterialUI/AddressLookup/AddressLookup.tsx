@@ -84,10 +84,14 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
                         findAddresses={this.findAddresses}> </ListOption>)}
                     getOptionLabel={(option:IAddress) => (option.Text + Constants.comma_DELIMETER + option.Description + Constants.DEFAULT_STRING)}
                     onInputChange={(event: React.ChangeEvent<{}>, newInputValue:string):void => {
-                        this.handleInputChange(event, newInputValue);
+                        
+                        //if event is not to expand the addresses
+                        if((event.target as HTMLElement).innerText !== Constants.Expand){
+                            this.handleInputChange(event, newInputValue);
+                        }
                     }}
                     disableCloseOnSelect
-                    loading={true}
+                    loading={this.state.isLoading}
                     onChange={(e: React.ChangeEvent<{}>, value: any, reason: AutocompleteChangeReason, details: AutocompleteChangeDetails<IAddress>|undefined): void => {
                         (reason === Constants.AUTOCOMPLETE_SELECT_OPTION) ? this.onSelectOptionValueChange(value) : console.log(`reason: ${reason} details: ${details}`);
                     }}

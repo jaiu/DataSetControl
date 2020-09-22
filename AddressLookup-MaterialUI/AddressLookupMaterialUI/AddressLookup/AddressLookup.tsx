@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails } from '@material-ui/lab/AutoComplete';
-import { CircularProgress, TextField } from '@material-ui/core';
+import { CircularProgress, makeStyles, TextField } from '@material-ui/core';
 import { Constants } from '../Constants/Constants';
 import { IAddressProps, IAddressState, IAddress } from '../Interfaces/Interfaces';
 import { ListOption } from '../ListOption/ListOption';
@@ -19,7 +19,8 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
         //initial addresses set to empty
         this.state = {
             Addresses: initialAddresses,
-            isLoading: false
+            isLoading: false,
+            isExpandClicked: false,
         }
     }
 
@@ -32,7 +33,8 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
         
         //set state to loading
         this.setState({
-            isLoading: true
+            isLoading: true,
+            Addresses: initialAddresses
         });
 
         //once data received
@@ -61,6 +63,8 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
         //set state to loading
         this.setState({
             isLoading: true,
+            Addresses: initialAddresses,
+            isExpandClicked: true,
         });
 
         //once data received
@@ -68,6 +72,7 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
             this.setState({
                 Addresses: _addresses,
                 isLoading: false,
+                isExpandClicked: false,
             })
         });
     }
@@ -82,12 +87,24 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
                     options={this.state.Addresses} 
                     renderOption={(option: IAddress) => ( <ListOption Description={option.Description} Id={option.Id} Next={option.Next} Text={option.Text}
                         findAddresses={this.findAddresses}> </ListOption>)}
-                    getOptionLabel={(option:IAddress) => (option.Text + Constants.comma_DELIMETER + option.Description + Constants.DEFAULT_STRING)}
+                    getOptionLabel={(option:IAddress) => 
+                        
+                        /**
+                         * isExpandClicked state var is to clear the input label
+                         * when address type is find. Otherwise, it just returns the option (IAdress)
+                         * value
+                         */
+
+                        (!this.state.isExpandClicked) ? (option.Text + Constants.comma_DELIMETER + option.Description + Constants.DEFAULT_STRING)
+                        : (Constants.DEFAULT_STRING)
+                    }
                     onInputChange={(event: React.ChangeEvent<{}>, newInputValue:string):void => {
                         
                         //if event is not to expand the addresses
-                        if((event.target as HTMLElement).innerText !== Constants.Expand){
-                            this.handleInputChange(event, newInputValue);
+                        if(event !== null){
+                            if((event.target as HTMLElement).innerText !== Constants.Expand){
+                                this.handleInputChange(event, newInputValue);
+                            }
                         }
                     }}
                     disableCloseOnSelect
@@ -103,6 +120,12 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
                             {params.InputProps.endAdornment}
                           </React.Fragment>
                         ),
+                      }}
+                      onBlur={(e) => {
+                        console.log(e.target.value);
+                      }}
+                      onChange={(e) => {
+                        console.log(e.target.value);
                       }}></TextField>}
                 />
             </div>

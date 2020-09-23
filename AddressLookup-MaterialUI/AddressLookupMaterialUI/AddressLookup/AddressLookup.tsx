@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails } from '@material-ui/lab/AutoComplete';
-import { CircularProgress, makeStyles, TextField } from '@material-ui/core';
+import { CircularProgress, TextField } from '@material-ui/core';
 import { Constants } from '../Constants/Constants';
 import { IAddressProps, IAddressState, IAddress } from '../Interfaces/Interfaces';
 import { ListOption } from '../ListOption/ListOption';
 import { getAddresses, getFindAddresses } from '../Helper/Helper';
-import ReactDOM = require('react-dom');
 
 
 //initial addresses
@@ -141,7 +140,7 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
                             }
                         }
                     }}
-                    disableCloseOnSelect
+                    disableCloseOnSelect={false}
                     loading={this.state.isLoading}
                     onChange={(e: React.ChangeEvent<{}>, value: any, reason: AutocompleteChangeReason, details: AutocompleteChangeDetails<IAddress>|undefined): void => {
                         (reason === Constants.AUTOCOMPLETE_SELECT_OPTION) ? this.onSelectOptionValueChange(value) : console.log(`reason: ${reason} details: ${details}`);

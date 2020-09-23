@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Box } from '@material-ui/core';
 import { Constants } from '../Constants/Constants';
-import { IListOptionProps } from '../Interfaces/Interfaces';
+import { IListOptionProps } from '../Interfaces/IListOptionProps/IListOptionProps';
 import { FunctionComponent } from 'react';
 
 

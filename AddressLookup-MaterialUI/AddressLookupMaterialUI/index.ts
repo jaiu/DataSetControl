@@ -3,8 +3,9 @@ import { AddressLookup } from './AddressLookup/AddressLookup';
 import { Constants } from './Constants/Constants';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { IAddress, IAddressProps } from './Interfaces/Interfaces';
-
+import { IAddress } from './Interfaces/IAddress/IAddress';
+import { IAddressProps } from './Interfaces/IAddressProps/IAddressProps';
+import { IRetrieveAddress } from './Interfaces/IRetrieveAddress/IRetrieveAddress';
 
 export class AddressLookupMaterialUI implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -28,9 +29,7 @@ export class AddressLookupMaterialUI implements ComponentFramework.StandardContr
 	 * Empty constructor.
 	 */
 	constructor()
-	{
-
-	}
+	{}
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -54,9 +53,9 @@ export class AddressLookupMaterialUI implements ComponentFramework.StandardContr
 	 * Address Component
 	 * @param value 
 	 */
-	private notifyChange(value: IAddress){
+	private notifyChange(value: IRetrieveAddress[]){
 
-		this.AddressProps.CompleteAddress = value;
+		this.AddressProps.CompleteAddress = value[0];
 		this.theNotifyOutputChanged();
 	}
 
@@ -82,11 +81,11 @@ export class AddressLookupMaterialUI implements ComponentFramework.StandardContr
 	public getOutputs(): IOutputs
 	{
 		return {
-			 AddressLine1: this.AddressProps.CompleteAddress?.Text,
-			 City: this.AddressProps.CompleteAddress?.Description.split(Constants.comma_DELIMETER)[0],
-			 State: this.AddressProps.CompleteAddress?.Description.split(Constants.comma_DELIMETER)[1],
-			 Postcode: this.AddressProps.CompleteAddress?.Description.split(Constants.comma_DELIMETER)[2],
-			 Country: Constants.DEFAULT_COUNTRY,
+			 AddressLine1: this.AddressProps.CompleteAddress?.Line1,
+			 City: this.AddressProps.CompleteAddress?.City,
+			 State: this.AddressProps.CompleteAddress?.ProvinceCode,
+			 Postcode: this.AddressProps.CompleteAddress?.PostalCode,
+			 Country: this.AddressProps.CompleteAddress?.CountryIso3,
 		};
 	}
 

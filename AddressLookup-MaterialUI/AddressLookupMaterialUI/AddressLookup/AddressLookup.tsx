@@ -2,9 +2,12 @@ import * as React from 'react';
 import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails } from '@material-ui/lab/AutoComplete';
 import { CircularProgress, TextField } from '@material-ui/core';
 import { Constants } from '../Constants/Constants';
-import { IAddressProps, IAddressState, IAddress } from '../Interfaces/Interfaces';
 import { ListOption } from '../ListOption/ListOption';
-import { getAddresses, getFindAddresses } from '../Helper/Helper';
+import { getAddresses, getFindAddresses, retrieveAddress } from '../Helper/Helper';
+import { IAddress } from '../Interfaces/IAddress/IAddress';
+import { IAddressProps } from '../Interfaces/IAddressProps/IAddressProps';
+import { IAddressState } from '../Interfaces/IAddressState/IAddressState';
+import { IRetrieveAddress } from '../Interfaces/IRetrieveAddress/IRetrieveAddress';
 
 
 //initial addresses
@@ -51,7 +54,7 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
         });
 
         //once data received
-        getAddresses(_newValue, this.props.APIKey).then((_addresses: any) => {
+        getAddresses(_newValue, this.props.APIKey).then((_addresses: IAddress[]) => {
             this.setState({
                 Addresses: _addresses,
                 isLoading: false
@@ -64,7 +67,19 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
      * @param newValue 
      */ 
     private onSelectOptionValueChange = (_newValue: IAddress) : void => {
-        this.props.handleOnChange(_newValue);
+        
+        //if next action is find
+        if(_newValue.Next === Constants.NEXT.Find)
+            return;
+        
+        //if next action is retrieve
+        if(_newValue.Next === Constants.NEXT.Retrieve){
+            //retrieve full address
+            retrieveAddress(_newValue.Id, this.props.APIKey).then((_addresses: IRetrieveAddress[]) => {
+                this.props.handleOnChange(_addresses);    
+            });
+            
+        }
     }
 
     /**
@@ -82,7 +97,7 @@ export class AddressLookup extends React.Component<IAddressProps, IAddressState>
 
 
         //once data received
-        getFindAddresses(_id, this.props.APIKey).then((_addresses: any) => {
+        getFindAddresses(_id, this.props.APIKey).then((_addresses: IAddress[]) => {
             this.setState({
                 Addresses: _addresses,
                 isLoading: false,

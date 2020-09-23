@@ -18,6 +18,7 @@ export interface IAddressState {
     Addresses: IAddress[];
     isLoading: boolean;
     isExpandClicked: boolean,
+    expandKey: number,
 }
 //#endregion
 

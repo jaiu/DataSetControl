@@ -53,10 +53,15 @@ export class AddressLookupMaterialUI implements ComponentFramework.StandardContr
 	 * Address Component
 	 * @param value 
 	 */
-	private notifyChange(value: IRetrieveAddress[]){
+	private notifyChange(_value: IRetrieveAddress[]){
 
-		this.AddressProps.CompleteAddress = value[0];
-		this.theNotifyOutputChanged();
+		for(var val of _value){
+			//check for english result
+			if(val.Language == Constants.Language.English){
+				this.AddressProps.CompleteAddress = val;
+				this.theNotifyOutputChanged();
+			}
+		}
 	}
 
 	/**
@@ -82,6 +87,7 @@ export class AddressLookupMaterialUI implements ComponentFramework.StandardContr
 	{
 		return {
 			 AddressLine1: this.AddressProps.CompleteAddress?.Line1,
+			 AddressLine2: this.AddressProps.CompleteAddress?.Line2,
 			 City: this.AddressProps.CompleteAddress?.City,
 			 State: this.AddressProps.CompleteAddress?.ProvinceCode,
 			 Postcode: this.AddressProps.CompleteAddress?.PostalCode,

@@ -8,11 +8,14 @@ export class Constants {
     public static readonly HTTP_HEADER_CONTENT_FORM_URLENCODED = "application/x-www-form-urlencoded";
     public static readonly AUTOCOMPLETE_SELECT_OPTION = "select-option";
     public static readonly Expand = "EXPAND";
+    public static readonly Language = {
+        English: "ENG",
+        French: "FRE",
+    };
     public static readonly NEXT = {
         Retrieve: "Retrieve",
         Find: "Find",
     }
-    
 
     /**
      * Get request body for search call

@@ -4,6 +4,7 @@
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="AddressInput" display-name-key="AddressInput" description-key="AddressInput" of-type="SingleLine.Text" usage="bound" required="false" />
     <property name="AddressLine1" display-name-key="AddressLine1" description-key="AddressLine1" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="AddressLine2" display-name-key="AddressLine2" description-key="AddressLine2" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="City" display-name-key="City" description-key="City" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="State" display-name-key="State" description-key="State" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="Postcode" display-name-key="Postcode" description-key="Postcode" of-type="SingleLine.Text" usage="bound" required="true" />

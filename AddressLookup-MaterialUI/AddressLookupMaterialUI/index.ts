@@ -3,7 +3,6 @@ import { AddressLookup } from './AddressLookup/AddressLookup';
 import { Constants } from './Constants/Constants';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { IAddress } from './Interfaces/IAddress/IAddress';
 import { IAddressProps } from './Interfaces/IAddressProps/IAddressProps';
 import { IRetrieveAddress } from './Interfaces/IRetrieveAddress/IRetrieveAddress';
 

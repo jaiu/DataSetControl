@@ -4,12 +4,13 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { HoverCard, IPlainCardProps, HoverCardType } from 'office-ui-fabric-react/lib/HoverCard';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
-import { DetailsList, IColumn, DetailsListLayoutMode, ConstrainMode, IDetailsFooterProps, Selection, SelectionMode, IDetailsHeaderProps, DetailsRowCheck, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, IColumn, DetailsListLayoutMode, ConstrainMode, IDetailsFooterProps, Selection, SelectionMode, IDetailsHeaderProps, DetailsRowCheck, DetailsRow, IDetailsRowBaseProps, IDetailsRowProps } from 'office-ui-fabric-react/lib/DetailsList';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { ITooltipHostProps, TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
+import { cpuUsage } from 'process';
 
 //#region Style Constants
 
@@ -116,7 +117,7 @@ export class ListControl extends React.Component<IListControlProps, IListControl
             _columns: this._buildColumns(newProps.columns)
         });
         this._totalWidth = this._totalColumnWidth(newProps.columns);
-
+        this._totalRecords = newProps.totalResultCount;
         this._cmdBarFarItems = this.renderCommandBarFarItem(newProps.data.length);
     }
 
@@ -155,14 +156,51 @@ export class ListControl extends React.Component<IListControlProps, IListControl
         );
       }
 
+    private _renderDetailsFooterItemColumn: IDetailsRowProps['onRenderItemColumn'] = (item, index, column: IListColumn | undefined) => {
+        if (column?.dataType === "Currency" || column?.dataType === "Decimal" || column?.dataType === "FP") {
+            let _total = this._getTotalValue(column.dataType, column.key, this.props.data);
+            if(_total > 0){
+                return (
+                    <div className={classNames.listFooter}>
+                        <Label className={"listFooterLabelRow"}>{(column.dataType === "Currency") 
+                        ? `$${_total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` 
+                        : _total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Label>
+                    </div>
+                );
+            }
+        }
+        if ( column?.dataType === "Whole.None") {
+            let _total = this._getTotalValue(column.dataType, column.key, this.props.data);
+            if(_total > 0){
+                return (
+                    <div className={classNames.listFooter}>
+                        <Label className={"listFooterLabelRow"}>{_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Label>
+                    </div>
+                );
+            }
+        }
+        return undefined;
+    };
+
     private _onRenderDetailsFooter = (props: IDetailsFooterProps | undefined, defaultRender?: IRenderFunction<IDetailsFooterProps>): JSX.Element => {
-        return (
-            <Sticky stickyPosition={StickyPositionType.Footer} isScrollSynced={true}>
-                <div className={classNames.listFooter}>
-                    <Label className={"listFooterLabel"}>{`${this.state._selectionCount} selected`}</Label>
-                    <CommandBar className={"cmdbar"} farItems={this._cmdBarFarItems} items={this._cmdBarItems} />
+        return (<div>
+                    <DetailsRow
+                        {...props}
+                        columns={props?.columns}
+                        item={{}}
+                        itemIndex={-1}
+                        groupNestingDepth={props?.groupNestingDepth}
+                        selectionMode={SelectionMode.none}
+                        selection={props?.selection}
+                        onRenderItemColumn={this._renderDetailsFooterItemColumn}
+                    />
+                    <Sticky stickyPosition={StickyPositionType.Footer} isScrollSynced={true}>
+                        <div className={classNames.listFooter}>
+                            <Label className={"listFooterLabel"}>{`${this.state._selectionCount} selected`}</Label>
+                            <CommandBar className={"cmdbar"} farItems={this._cmdBarFarItems} items={this._cmdBarItems} />
+                        </div>
+                    </Sticky>
                 </div>
-            </Sticky>
         );
     }
 
@@ -188,6 +226,29 @@ export class ListControl extends React.Component<IListControlProps, IListControl
                     return col;
                 })
         });
+    }
+
+    private _getTotalValue(type: string, columnName: string | undefined, dataset: any): number {
+        let sum: number = 0;
+        if(dataset){
+            dataset.map((data: any) => {
+                if(data){
+                    if(data[columnName!]){
+                        switch(type){
+                            case "Decimal": 
+                            case "Currency":
+                            case "FP": 
+                                sum += Number.parseFloat(data[columnName!].replace(/[^\d\.]/g, ''));
+                                break;
+                            case "Whole.None":
+                                sum += Number.parseInt(data[columnName!].replace(/[^\d\.]/g, ''));
+                                break;
+                        }
+                    }
+                }
+            });
+        }
+        return sum;
     }
 
     private _setSelectionDetails(): number {
@@ -237,11 +298,11 @@ export class ListControl extends React.Component<IListControlProps, IListControl
         this.state._triggerNavigate(item.key);
     }
 
-    private _buildColumns(listData: IListColumn[]): IColumn[] {
-        let iColumns: IColumn[] = [];
+    private _buildColumns(listData: IListColumn[]): IListColumn[] {
+        let iColumns: IListColumn[] = [];
 
         for (var column of listData){
-            let iColumn: IColumn = {
+            let iColumn: IListColumn = {
                 key: column.key,
                 name: column.name,
                 fieldName: column.fieldName,
@@ -255,7 +316,8 @@ export class ListControl extends React.Component<IListControlProps, IListControl
                 headerClassName: column.headerClassName,
                 data: column.data,
                 isSorted: column.isSorted,
-                isSortedDescending: column.isSortedDescending
+                isSortedDescending: column.isSortedDescending,
+                dataType: column.dataType
             }
             
             //create links for primary field and entity reference.            

@@ -3,6 +3,13 @@
     font-size: 0.857143rem;
     width: -webkit-fill-available;
 }
+.listFooterLabelRow {
+    color: #0e0e0f;
+    font-size: 1.0rem;
+    font-weight: bold;
+    padding-left: 47px;
+    width: -webkit-fill-available;
+}
 .cmdbar {
     width: -webkit-fill-available;
 }

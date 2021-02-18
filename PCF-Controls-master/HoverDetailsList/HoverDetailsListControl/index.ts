@@ -145,6 +145,18 @@ export class HoverDetailsListControl implements ComponentFramework.StandardContr
 			else if (column.dataType === 'SingleLine.Phone') {
 				iColumn.dataType = "Phone";
 			}
+			else if (column.dataType === 'Currency') {
+				iColumn.dataType = "Currency";
+			}
+			else if (column.dataType === 'Decimal') {
+				iColumn.dataType = "Decimal";
+			}
+			else if (column.dataType === 'FP') {
+				iColumn.dataType = "FP";
+			}
+			else if (column.dataType === 'Whole.None') {
+				iColumn.dataType = "Whole.None";
+			}
 
 			let isSorted = dataSet?.sorting?.findIndex(s => s.name === column.name) !== -1 || false;
 			iColumn.isSorted = isSorted;
